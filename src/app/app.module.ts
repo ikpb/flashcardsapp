@@ -7,18 +7,31 @@ import { FlashcardComponent } from './components/flashcard/flashcard.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { NotFoundComponent } from './components/not-found/not-found.component';
 import { LoginComponent } from './components/login/login.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { DeckListComponent } from './components/deck-list/deck-list.component';
+import { LogOutButtonComponent } from './components/log-out-button/log-out-button.component';
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
+
 
 @NgModule({
   declarations: [
     AppComponent,
     FlashcardComponent,
     NotFoundComponent,
-    LoginComponent
+    LoginComponent,
+    DeckListComponent,
+    LogOutButtonComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    FontAwesomeModule
+    FontAwesomeModule,
+    FormsModule,
+    ReactiveFormsModule,
+    NgbModule,
+    HttpClientModule,
+    HttpClient
   ],
   providers: [],
   bootstrap: [AppComponent]
