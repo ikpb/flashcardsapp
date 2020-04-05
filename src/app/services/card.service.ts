@@ -44,8 +44,8 @@ getCard(id:string): Observable<Card>{
   let idValue = parseInt(id);
   return this.http.get<Card>(this.singleCardUrl+idValue,httpOptions);
 }
-updateCard(Card:Card): Observable<Card>{
-  return this.http.put<Card>(this.singleCardUrl,JSON.stringify(Card),httpOptions);
+updateCard(deckname:String,Card:Card): Observable<Card>{
+  return this.http.put<Card>(this.singleCardUrl+deckname,JSON.stringify(Card),httpOptions);
 }
 
 getCardsInDeck(deckname:string) : Observable<Card[]>{

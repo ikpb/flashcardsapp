@@ -4,7 +4,7 @@
     box-sizing: border-box;
 }
 body{
-    background-color:#87cefa;
+    background-color:#fff;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -15,6 +15,11 @@ body{
     font-family: 'Slabo', sans-serif;
 }
 
+#routeMe{
+    position: absolute;
+    top:2%;
+    left: 3%;
+}
 h1{
     position: relative;
 }
@@ -80,6 +85,7 @@ h1 button{
 }
 
 .inner-card{
+    box-shadow: 0 1px 10px rgba(0,0,0,0.3);
     border-radius: 5px;
     height: 100%;
     width: 100%;
@@ -90,10 +96,10 @@ h1 button{
 }
 .card.show-answer .inner-card{
     transform: rotateX(180deg);
-    box-shadow: none;
+   
 }
 .inner-card-front, .inner-card-back{
-    backface-visibility: hidden;
+backface-visibility: hidden;
 position: absolute;
 top:0;
 left:0;
@@ -130,7 +136,7 @@ color: #bbb;
     right: 37px;
     font-weight: 400;
     font-size: 15px;
-    content: "\f007 Flip";
+    content: "Flip";
     color: #bbb;
     }
     .navigation{

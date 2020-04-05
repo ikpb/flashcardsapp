@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { faTrash, faPlus,faArrowLeft,faArrowRight,faTimes,faSyncAlt, faEdit } from '@fortawesome/free-solid-svg-icons';
+import { faTrash, faPlus,faArrowLeft,faArrowRight,faTimes,faSyncAlt, faEdit, faQuestion } from '@fortawesome/free-solid-svg-icons';
 import { NgForm } from '@angular/forms';
 import { Card } from '../../models/Card';
 import { CardService } from '../../services/card.service';
@@ -25,10 +25,12 @@ export class FlashcardComponent implements OnInit {
 deckName:String ="";
 makeEditCard:String="";
 singleCard:Card = {
-  question:"Please",
+  cardid:0,
+  question:"Please (Flip Card)",
   answer:"Add a Card"
 };
 addCard:Card = {
+  cardid:0,
   question:"",
   answer:""
 };
@@ -53,10 +55,10 @@ currentCardIndex;
       if(cards.length!=0){
       this.cardsData=cards;
       this.deckTotal=this.cardsData.length;
-      this.displayCard(this.cardsData[0].question,this.cardsData[0].answer,0)
+      this.displayCard(this.cardsData[0].cardid,this.cardsData[0].question,this.cardsData[0].answer,0)
       }else{
         this.cardsData = [{
-          question:"Please",
+          question:"Please (Flip Card)",
           answer:"Add a Card"
         }]
         this.deckTotal=this.cardsData.length;
@@ -67,22 +69,37 @@ currentCardIndex;
 
   }
 
-  displayCard(question:String,answer:String, index:Number){
+  displayCard(cardid:Number,question:String,answer:String,index:Number){
     this.currentCardIndex = index;
+    this.singleCard.cardid = cardid;
     this.singleCard.question = question;
     this.singleCard.answer = answer;
   }
   onSubmit(value, currentDeck){
-    
-    this.deckService.updateDeck(currentDeck,value.value).subscribe(
+    console.log(value);
+    let cardid = value.value.cardid;
+    let question = value.value.question;
+    let answer = value.value.answer;
+    console.log(`"cardid":"${cardid}","question":"${question}","answer":"${answer}"`)
+    if(value.value.cardid==undefined){
+      delete value.value.cardid;
+          this.deckService.updateDeck(currentDeck,value.value).subscribe(
       data=>{
         this.cardsData.push(data);
         this.deckTotal=this.cardsData.length;
+        console.log("added worked");
       });
       this.addCard={
         question:"",
         answer:""
       }
+    }else{
+      this.cardService.updateCard(this.deckName,{cardid,question,answer}as Card).subscribe(data=>{
+        console.log(data);
+        console.log("edit worked");
+      });
+    }
+
       
   }
 
@@ -90,8 +107,8 @@ currentCardIndex;
     let thisCard =this.cardsData[currCardIndex];
     delete thisCard.deck;
     console.log(thisCard);
-
-    this.cardService.deleteCard(thisCard).subscribe(data=>{
+    if(!thisCard.question.includes("Please (Flip Card)")){
+              this.cardService.deleteCard(thisCard).subscribe(data=>{
       console.log(data);
     });
     setTimeout(() => {
@@ -99,8 +116,13 @@ currentCardIndex;
       console.log(data);
     });
     }, 2000);
-   
-    this.cardsData.splice(currCardIndex,1)
+    }else{
+  
+   alert("no cards to delete")
+    }
+
+    if(currCardIndex!=0){
+          this.cardsData.splice(currCardIndex,1)
     this.deckTotal=this.cardsData.length;
     console.log(currCardIndex);
     console.log(this.deckTotal);
@@ -109,6 +131,15 @@ currentCardIndex;
     }else{
       this.rightClick(currCardIndex);
     }
+    }else{
+      this.cardsData = [{
+        question:"Please (Flip Card)",
+        answer:"Add a Card"
+      }]
+      this.deckTotal=this.cardsData.length;
+      this.currentCardIndex=0
+    }
+
     
   }
   editCard(currCardIndex){
@@ -131,9 +162,9 @@ currentCardIndex;
     let deckTotNumb = this.deckTotal-1;
     if(currentIndex!=deckTotNumb){
           currentIndex = currentIndex+1;
-    this.displayCard(this.cardsData[currentIndex].question,this.cardsData[currentIndex].answer,currentIndex)
+    this.displayCard(this.cardsData[currentIndex].cardid,this.cardsData[currentIndex].question,this.cardsData[currentIndex].answer,currentIndex)
     }else{
-      this.displayCard(this.cardsData[0].question,this.cardsData[0].answer,0)
+      this.displayCard(this.cardsData[0].cardid,this.cardsData[0].question,this.cardsData[0].answer,0)
     }
 
 
@@ -142,9 +173,9 @@ currentCardIndex;
     let deckTotNumb = this.deckTotal-1;
     if(currentIndex!=0){
           currentIndex = currentIndex-1;
-    this.displayCard(this.cardsData[currentIndex].question,this.cardsData[currentIndex].answer,currentIndex)
+    this.displayCard(this.cardsData[currentIndex].cardid,this.cardsData[currentIndex].question,this.cardsData[currentIndex].answer,currentIndex)
     }else{
-      this.displayCard(this.cardsData[deckTotNumb].question,this.cardsData[deckTotNumb].answer,deckTotNumb)
+      this.displayCard(this.cardsData[deckTotNumb].cardid,this.cardsData[deckTotNumb].question,this.cardsData[deckTotNumb].answer,deckTotNumb)
     }
 
 

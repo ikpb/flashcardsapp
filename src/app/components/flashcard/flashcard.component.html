@@ -1,7 +1,9 @@
 
-<body>
-    <button id="clear" class="clear btn"> <fa-icon [icon]="faTrash"></fa-icon>Clear Cards</button>
 
+<body>
+    <a routerLink="/decklist" id="routeMe" class="btn btn-light btn-sm">Back to Deck List</a>
+    <button id="clear" class="clear btn"> <fa-icon [icon]="faTrash"></fa-icon>Clear Cards</button>
+    
     <h1>{{deckName}}
     </h1>
 
@@ -62,6 +64,9 @@
         </h1>
 
         <form class="form" (ngSubmit)="onSubmit(myForm,deckName)" #myForm="ngForm">
+        <div class="form-group">
+            <input class="form-control" type="hidden" [(ngModel)]="addCard.cardid" name="cardid" >
+        </div>
         <div class="form-group">
             <label for="question">Question:</label>
             <textarea class="form-control" name="question" id="question" [(ngModel)]="addCard.question" placeholder="Enter question..."></textarea>
