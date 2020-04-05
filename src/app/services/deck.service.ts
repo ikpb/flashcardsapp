@@ -27,8 +27,8 @@ deleteDeck(deckname:string): Observable<Deck>{
 getDeck(deckname:string): Observable<Deck>{
   return this.http.get<Deck>(this.singleDeckUrl+deckname,httpOptions);
 }
-updateDeck(deckname:string, card:Card): Observable<Deck>{
-  return this.http.put<Deck>(`${this.singleDeckUrl}${deckname}/card`,JSON.stringify(card),httpOptions);
+updateDeck(deckname:string, card:Card): Observable<Card>{
+  return this.http.put<Card>(`${this.singleDeckUrl}${deckname}/card`,JSON.stringify(card),httpOptions);
 }
 
 }

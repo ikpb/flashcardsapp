@@ -12,6 +12,8 @@ import { DeckListComponent } from './components/deck-list/deck-list.component';
 import { LogOutButtonComponent } from './components/log-out-button/log-out-button.component';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { DeckService } from './services/deck.service';
+import { CardService } from './services/card.service';
 
 
 @NgModule({
@@ -21,7 +23,8 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
     NotFoundComponent,
     LoginComponent,
     DeckListComponent,
-    LogOutButtonComponent
+    LogOutButtonComponent,
+
   ],
   imports: [
     BrowserModule,
@@ -31,9 +34,10 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
     ReactiveFormsModule,
     NgbModule,
     HttpClientModule,
-    HttpClient
+
+    
   ],
-  providers: [],
+  providers: [DeckService,CardService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

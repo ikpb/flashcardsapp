@@ -6,18 +6,18 @@
     </h1>
 
     <div id="cards-container" class="cards">
-        <div class="card active" [class.show-answer]="showAnswer" (click)="showAns($event)">
+        <div class="card"  [class.active]="onCurrentIndex" [class.show-answer]="showAnswer" (click)="showAns($event)" >
             <div class="inner-card">
                 <div class="inner-card-front">
                     <fa-icon [icon]="faSyncAlt" class="inner-icon"></fa-icon>
                     <p>
-                        what is Php?
+                        {{singleCard.question}}
                     </p>
                 </div>
                 <div class="inner-card-back">
                     <fa-icon [icon]="faSyncAlt" class="inner-icon"></fa-icon>
                     <p>
-                        a programming language
+                        {{singleCard.answer}}
                     </p>
                 </div>
             </div>
@@ -41,34 +41,40 @@
         </div> -->
     </div>
     <div class="navigation">
-        <button id="prev" class="nav-button">
+        <button id="prev" class="nav-button" (click)="leftClick(currentCardIndex)">
             <fa-icon [icon]="faArrowLeft"></fa-icon>
         </button>
-        <p id="current"></p>
-        <button id="prev" class="nav-button">
+        <p id="current">{{ currentCardIndex + 1 }}/{{ deckTotal}}</p>
+        <button id="prev" class="nav-button" (click)="rightClick(currentCardIndex)">
             <fa-icon [icon]="faArrowRight"></fa-icon>
         </button>
     </div>
     <div>
-    <button id="show" class="btn btn-small" (click)="toggleAddCard()" ><fa-icon [icon]="faPlus"></fa-icon> Add New Card</button><button id="show" class="btn btn-small" (click)="deleteCard()" >    <fa-icon [icon]="faTimes"></fa-icon> Delete Card</button></div>
+    <button id="show" class="btn btn-small" (click)="toggleAddCard()" ><fa-icon [icon]="faPlus"></fa-icon> Add New Card</button>
+    <button id="edit" class="btn btn-small" (click)="editCard(currentCardIndex)" ><fa-icon [icon]="faPlus"></fa-icon> Edit Card</button>
+    <button id="delete" class="btn btn-small" (click)="deleteCard(currentCardIndex)" >    <fa-icon [icon]="faTimes"></fa-icon> Delete Card</button>
+</div>
     <div id="add-container" *ngIf="showAddCard" class="add-container">
-        <h1>Add New Card
-            <div id="hide" class=" btn-small btn-ghost">
+        <h1>{{makeEditCard}}
+            <div id="hide" class=" btn-small btn-ghost" (click)="toggleAddCard()">
                 <fa-icon [icon]="faTimes"></fa-icon>
             </div>
         </h1>
 
-        <form class="form" (ngSubmit)="onSubmit(myForm)" #myForm="ngForm">
+        <form class="form" (ngSubmit)="onSubmit(myForm,deckName)" #myForm="ngForm">
         <div class="form-group">
             <label for="question">Question:</label>
-            <textarea class="form-control" name="question" id="question" [(ngModel)]="card.question" placeholder="Enter question..."></textarea>
+            <textarea class="form-control" name="question" id="question" [(ngModel)]="addCard.question" placeholder="Enter question..."></textarea>
         </div>
         <div class="form-group">
             <label for="question">Answer:</label>
-            <textarea class="form-control" name="answer" id="answer" [(ngModel)]="card.answer" placeholder="Enter answer..."></textarea>
+            <textarea class="form-control" name="answer" id="answer" [(ngModel)]="addCard.answer" placeholder="Enter answer..."></textarea>
         </div>
-        <button id="add-card" class="btn">
-            <fa-icon [icon]="faPlus"> Add Card</fa-icon>
+        <button id="add-card" *ngIf="addButton" class="btn">
+            <fa-icon [icon]="faPlus"></fa-icon>Add Card
+        </button>
+        <button id="edit-card" *ngIf="editButton" class="btn">
+            <fa-icon [icon]="faEdit"></fa-icon>Edit Card
         </button>
     </form>
     </div>

@@ -8,6 +8,7 @@ import { DeckListComponent } from './components/deck-list/deck-list.component';
 const routes: Routes = [
   {path: '', redirectTo: '/flashcard', pathMatch: 'full'},
   {path: 'decklist', component: DeckListComponent},
+  {path: 'decklist/:id', component: FlashcardComponent},
   {path: 'flashcard', component: FlashcardComponent},
   {path: 'login', component: LoginComponent,},
   {path: '**', component: NotFoundComponent},

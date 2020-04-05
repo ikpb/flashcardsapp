@@ -6,6 +6,8 @@ import { map, startWith } from 'rxjs/operators';
 import { Deck } from '../../models/Deck';
 import { DeckService } from '../../services/deck.service';
 
+import { Router } from '@angular/router';
+
 
 
 
@@ -21,7 +23,8 @@ export class DeckListComponent implements OnInit {
 decks: Deck[];
   constructor(
     private pipe: DecimalPipe,
-    private deckService: DeckService
+    private deckService: DeckService,
+    private router: Router
     ) {
     this.decks$ = this.filter.valueChanges.pipe(
       startWith(''),
@@ -50,6 +53,10 @@ decks: Deck[];
       const term = text.toLowerCase();
       return decks.deckname.toLowerCase().includes(term);
     });
+  }
+  openDeck(deck:Deck){
+    console.log(deck);
+    this.router.navigate(['/decklist',deck.deckname]);
   }
 
 }

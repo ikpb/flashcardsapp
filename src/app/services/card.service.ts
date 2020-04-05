@@ -10,6 +10,8 @@ const httpOptions = {
   headers: new HttpHeaders({'Content-Type': 'application/json'})
 }
 
+
+
 @Injectable({
   providedIn: 'root'
 })
@@ -26,9 +28,17 @@ export class CardService {
 saveCard(Card: Card): Observable<Card>{
   return this.http.post<Card>(this.CardsUrl,JSON.stringify(Card),httpOptions);
 }
-deleteCard(id:string): Observable<Card>{
-  let idValue = parseInt(id);
-  return this.http.delete<Card>(this.singleCardUrl+idValue,httpOptions);
+deleteCard(Card: Card): Observable<Card>{
+  const httpOption2 = {
+    headers: new HttpHeaders({'Content-Type': 'application/json'}),
+    body:{
+      cardid:`${Card.cardid}`,
+    question:`${Card.question}`,
+      answer:`${Card.answer}`
+    }
+  }
+
+  return this.http.request<Card>('delete', this.CardsUrl,httpOption2);
 }
 getCard(id:string): Observable<Card>{
   let idValue = parseInt(id);
