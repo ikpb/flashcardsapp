@@ -13,6 +13,8 @@ const httpOptions = {
 export class DeckService {
   DecksUrl: string = 'http://localhost:8080/deck';
   singleDeckUrl: string = 'http://localhost:8080/deck/';
+  // AwsDecksUrl: string = 'http://ec2-34-238-176-76.compute-1.amazonaws.com:8080/deck';
+  // AwssingleDeckUrl: string = 'http://ec2-34-238-176-76.compute-1.amazonaws.com:8080/deck/';
   constructor(private http: HttpClient) { }
 
 getDecks() : Observable<Deck[]>{

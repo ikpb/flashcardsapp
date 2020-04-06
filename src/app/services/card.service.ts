@@ -19,6 +19,9 @@ export class CardService {
   CardsUrl: string = 'http://localhost:8080/card';
   singleCardUrl: string = 'http://localhost:8080/card/';
   CardsInDeckUrl: string = 'http://localhost:8080/card/deck/';
+  // AwsCardsUrl: string = 'http://ec2-34-238-176-76.compute-1.amazonaws.com/:8080/card';
+  // AwssingleCardUrl: string = 'http://localhost:8080card/';
+  // AwsCardsInDeckUrl: string = 'http://ec2-34-238-176-76.compute-1.amazonaws.com:8080/card/deck/';
   constructor(private http: HttpClient) { }
 
   getCards() : Observable<Card[]>{
